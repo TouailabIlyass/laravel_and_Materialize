@@ -27,4 +27,35 @@ class CveController extends Controller
 
         return back();
     }
+
+    public function edit(Request $request, $id)
+    {
+        $cve = Cve::find($id);
+
+        return redirect()->back()->with(['cveEdit' => $cve]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $cve = Cve::find($id);
+        $data = request()->validate([
+            'information' => 'required|min:5',
+            'link' => 'required',
+        ]);
+        $cve->information = request('information');
+        $cve->link = request('link');
+        $cve->save();
+
+        return back();
+    }
+
+    public function  delete(Request $request, $id)
+    {
+           # return $request->all();
+
+           $cve =  Cve::find($id);
+           $cve->delete();
+
+           return back();
+    }
 }
