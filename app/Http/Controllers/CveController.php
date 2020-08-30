@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Cve;
 
 class CveController extends Controller
 {
     public function list()
     {
-        $list=['test1','test2'];
+        $cves = Cve::all();
 
-        return view('internals.cves',['list',$list]);
+        return view('cves',['cves'=>$cves]);
     }
 }
