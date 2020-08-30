@@ -18,3 +18,4 @@ Route::get('/', function () {
 });
 
 Route::get('cves','CveController@list');
+Route::post('cves','CveController@save');
