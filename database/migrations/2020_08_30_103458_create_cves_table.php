@@ -15,6 +15,8 @@ class CreateCvesTable extends Migration
     {
         Schema::create('cves', function (Blueprint $table) {
             $table->id();
+            $table->string('information');
+            $table->string('link');
             $table->timestamps();
         });
     }
