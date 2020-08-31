@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use App\Cve;
 
 class CveController extends Controller
@@ -57,5 +58,13 @@ class CveController extends Controller
            $cve->delete();
 
            return back();
+    }
+
+    public function getData(Request $request, $next = 2)
+    {
+        $resp = Http::get('https://cve.circl.lu/api/last/'.$next)->json();
+        
+        $data = array_slice($resp, $next-2,$next, true);
+        return view('data',compact('data','next'));
     }
 }

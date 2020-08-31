@@ -3,32 +3,39 @@
 @section('content')
 
     <h1>Cve</h1>
-
+        <a href="{{ url('rest/'.($next+2)) }}" >Next</a>
+        <a href="{{ url('rest/'.($next-2)) }}" >Prec</a>
     <div class="row">
-        @foreach ($cves as $cve)
-            
-    <div class="col s12 m6">
-      <div class="card blue-grey darken-1">
-        <div class="card-content white-text">
-          <span class="card-title">{{$cve->information}}</span>
-          <p>{{$cve->link}}</p>
-          <p>cree en: {{$cve->created_at}}</p>
-        </div>
-        <div class="card-action">
-          <a href="{{ url('cve/'.$cve->id.'/edit') }}">Update</a>
-          <form action="{{ url('cve/'.$cve->id) }}" method='POST'>
+    <table class="striped">
+        <thead>
+          <tr>
+              <th>Name</th>
+              <th>Item Name</th>
+              <th>Item Price</th>
+              <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        @foreach ($data as $dt)
+          <tr>
+            <td>{{ $dt['id'] }}</td>
+            <td>Eclair</td>
+            <td>$0.87</td>
+            <td>
+          <form action="" method='POST'>
+          <a href="">Update</a>
           @csrf
           {{ method_field('DELETE') }}
           <button class="btn waves-effect waves-light red" type="submit">Delete</button>
           </form>
-        </div>
-      </div>
-    </div>
- 
+              </td>
+          </tr>
         @endforeach
-        @php
-        unset($cve);
-        @endphp
+       
+       
+        </tbody>
+      </table>
     </div>
 
   @if (!session()->has('cveEdit'))
