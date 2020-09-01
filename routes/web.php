@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('cves','CveController@list');
+Route::get('cves/{limit?}','CveController@list');
 Route::post('cves','CveController@save');
 Route::get('cve/{id}/edit','CveController@edit');
 Route::put('cve/{id}','CveController@update');

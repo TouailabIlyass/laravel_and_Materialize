@@ -8,11 +8,12 @@ use App\Cve;
 
 class CveController extends Controller
 {
-    public function list()
+    public function list($limit = 0)
     {
-        $cves = Cve::all();
+        $cves = Cve::limit(2)->offset($limit)->get();
+        $date = date('H:i');
 
-        return view('cves',['cves'=>$cves]);
+        return view('cves',['cves'=>$cves,'limit' => $limit,'date'=> $date]);
     }
 
     public function save()
@@ -64,7 +65,21 @@ class CveController extends Controller
     {
         $resp = Http::get('https://cve.circl.lu/api/last/'.$next)->json();
         
-        $data = array_slice($resp, $next-2,$next, true);
-        return view('data',compact('data','next'));
+        //$data = array_slice($resp, $next-2,$next, true);
+        //return view('data',compact('data','next'));
+        $cve;
+        foreach ($resp as $item){
+            $cve = new Cve();
+        $cve->id = $item['id'];
+        $cve->cwe = $item['cwe'];
+        $cve->cvss = $item['cvss'];
+        $cve->assigner = $item['assigner'];
+        $cve->link = $item['references'][0];
+        $cve->information = $item['summary'];
+        $cve->publie = $item['Published'];
+        $cve->save();
+        }
+        return $resp;
+
     }
 }

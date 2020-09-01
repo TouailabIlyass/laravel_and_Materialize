@@ -14,9 +14,13 @@ class CreateCvesTable extends Migration
     public function up()
     {
         Schema::create('cves', function (Blueprint $table) {
-            $table->id();
-            $table->string('information');
-            $table->string('link');
+            $table->string('id')->primary();
+            $table->string('assigner');
+            $table->string('cvss');
+            $table->string('cwe');
+            $table->text('information');
+            $table->text('link');
+            $table->date('publie');
             $table->timestamps();
         });
     }
